@@ -15,15 +15,19 @@ let client;
 async function initializeWhatsApp() {
   try {
     const puppeteerArgs = {
-      headless: 'new', // Use 'new' for latest Puppeteer headless mode
+      headless: 'new',
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
-        '--single-process', // Helps on low-memory servers like Render
+        '--disable-gpu', // Extra stability on Render
+        '--single-process',
       ],
+      // Use Puppeteer's bundled Chromium
       executablePath: process.env.CHROMIUM_PATH || puppeteer.executablePath(),
     };
+
+    console.log('Puppeteer executable path:', puppeteerArgs.executablePath);
 
     client = await wppconnect.create({
       session: 'rural-dung-cakes',
@@ -35,10 +39,13 @@ async function initializeWhatsApp() {
     console.log('Authenticated WhatsApp number:', phoneNumber);
   } catch (error) {
     console.error('Failed to initialize WhatsApp client:', error);
+    throw error; // Let Render logs capture this
   }
 }
 
-initializeWhatsApp();
+initializeWhatsApp().catch((error) => {
+  console.error('Initialization failed, server will continue running:', error);
+});
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'Server running', whatsappReady: !!client });

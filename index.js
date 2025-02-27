@@ -4,7 +4,7 @@ const wppconnect = require('@wppconnect-team/wppconnect');
 const path = require('path');
 const cors = require('cors');
 const fs = require('fs').promises;
-const puppeteer = require('puppeteer'); // Import Puppeteer explicitly
+const puppeteer = require('puppeteer');
 
 const app = express();
 app.use(express.json());
@@ -14,15 +14,14 @@ let client;
 
 async function initializeWhatsApp() {
   try {
-    // Use Puppeteer with custom args for deployment
     const puppeteerArgs = {
-      headless: true,
+      headless: 'new', // Use 'new' for latest Puppeteer headless mode
       args: [
-        '--no-sandbox', // Required for most deployment environments
+        '--no-sandbox',
         '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage', // Avoids memory issues on servers
+        '--disable-dev-shm-usage',
+        '--single-process', // Helps on low-memory servers like Render
       ],
-      // Use bundled Chromium from Puppeteer if available
       executablePath: process.env.CHROMIUM_PATH || puppeteer.executablePath(),
     };
 
@@ -36,13 +35,10 @@ async function initializeWhatsApp() {
     console.log('Authenticated WhatsApp number:', phoneNumber);
   } catch (error) {
     console.error('Failed to initialize WhatsApp client:', error);
-    throw error; // Rethrow to handle in deployment logs
   }
 }
 
-initializeWhatsApp().catch((error) => {
-  console.error('Initialization failed, server will continue running:', error);
-});
+initializeWhatsApp();
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'Server running', whatsappReady: !!client });
@@ -58,7 +54,7 @@ app.post('/send-order', async (req, res) => {
     return res.status(500).json({ error: 'WhatsApp client not ready' });
   }
 
-  const yourNumber = '919301680755@c.us'; // Your WhatsApp number
+  const yourNumber = '919301680755@c.us';
 
   const message = `
 Order Details:

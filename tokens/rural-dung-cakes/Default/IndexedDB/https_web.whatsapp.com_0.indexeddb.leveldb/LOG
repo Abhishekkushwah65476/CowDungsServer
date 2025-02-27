@@ -1,0 +1,39 @@
+2025/02/28-03:10:31.169 d38 Reusing MANIFEST D:\cow dungs\New folder\rural-dung-cakes-backend\tokens\rural-dung-cakes\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/02/28-03:10:31.173 d38 Recovering log #1438
+2025/02/28-03:10:31.268 d38 Reusing old log D:\cow dungs\New folder\rural-dung-cakes-backend\tokens\rural-dung-cakes\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/001438.log 
+2025/02/28-03:10:32.267 d38 Level-0 table #1458: started
+2025/02/28-03:10:32.303 d38 Level-0 table #1458: 847956 bytes OK
+2025/02/28-03:10:32.309 d38 Delete type=0 #1438
+2025/02/28-03:10:32.311 d38 Manual compaction at level-0 from '\x00X\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00Y\x00\x00\x00' @ 0 : 0; will stop at '\x00X\x00\x00\x05' @ 5510716 : 1
+2025/02/28-03:10:32.312 d38 Compacting 1@0 + 0@1 files
+2025/02/28-03:10:32.348 d38 Generated table #1459@0: 11524 keys, 257226 bytes
+2025/02/28-03:10:32.351 d38 Generated table #1460@0: 233 keys, 4059 bytes
+2025/02/28-03:10:32.351 d38 Compacted 1@0 + 0@1 files => 261285 bytes
+2025/02/28-03:10:32.353 d38 compacted to: files[ 0 2 14 0 0 0 0 ]
+2025/02/28-03:10:32.354 d38 Delete type=2 #1458
+2025/02/28-03:10:32.358 d38 Manual compaction at level-0 from '\x00X\x00\x00\x05' @ 5510716 : 1 .. '\x00Y\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/02/28-03:10:38.195 d38 Compacting 1@1 + 10@2 files
+2025/02/28-03:10:38.389 d38 Generated table #1461@1: 48155 keys, 2214354 bytes
+2025/02/28-03:10:38.546 d38 Generated table #1462@1: 48505 keys, 2208585 bytes
+2025/02/28-03:10:38.614 d38 Generated table #1463@1: 2638 keys, 2154492 bytes
+2025/02/28-03:10:38.741 d38 Generated table #1464@1: 5235 keys, 2169483 bytes
+2025/02/28-03:10:38.816 d38 Generated table #1465@1: 3648 keys, 2156365 bytes
+2025/02/28-03:10:38.972 d38 Generated table #1466@1: 19498 keys, 2189702 bytes
+2025/02/28-03:10:39.199 d38 Generated table #1467@1: 28865 keys, 2257064 bytes
+2025/02/28-03:10:39.406 d38 Generated table #1468@1: 33098 keys, 2230906 bytes
+2025/02/28-03:10:39.513 d38 Generated table #1469@1: 9724 keys, 2132953 bytes
+2025/02/28-03:10:39.817 d38 Generated table #1470@1: 90154 keys, 2236857 bytes
+2025/02/28-03:10:39.836 d38 Generated table #1471@1: 4386 keys, 96167 bytes
+2025/02/28-03:10:39.836 d38 Compacted 1@1 + 10@2 files => 22046928 bytes
+2025/02/28-03:10:39.841 d38 compacted to: files[ 0 1 15 0 0 0 0 ]
+2025/02/28-03:10:39.842 d38 Delete type=2 #1442
+2025/02/28-03:10:39.842 d38 Delete type=2 #1443
+2025/02/28-03:10:39.843 d38 Delete type=2 #1444
+2025/02/28-03:10:39.843 d38 Delete type=2 #1445
+2025/02/28-03:10:39.843 d38 Delete type=2 #1446
+2025/02/28-03:10:39.843 d38 Delete type=2 #1447
+2025/02/28-03:10:39.844 d38 Delete type=2 #1448
+2025/02/28-03:10:39.844 d38 Delete type=2 #1449
+2025/02/28-03:10:39.844 d38 Delete type=2 #1450
+2025/02/28-03:10:39.844 d38 Delete type=2 #1451
+2025/02/28-03:10:39.844 d38 Delete type=2 #1459

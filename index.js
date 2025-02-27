@@ -4,6 +4,7 @@ const wppconnect = require('@wppconnect-team/wppconnect');
 const path = require('path');
 const cors = require('cors');
 const fs = require('fs').promises;
+const puppeteer = require('puppeteer'); // Import Puppeteer explicitly
 
 const app = express();
 app.use(express.json());
@@ -13,20 +14,35 @@ let client;
 
 async function initializeWhatsApp() {
   try {
+    // Use Puppeteer with custom args for deployment
+    const puppeteerArgs = {
+      headless: true,
+      args: [
+        '--no-sandbox', // Required for most deployment environments
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage', // Avoids memory issues on servers
+      ],
+      // Use bundled Chromium from Puppeteer if available
+      executablePath: process.env.CHROMIUM_PATH || puppeteer.executablePath(),
+    };
+
     client = await wppconnect.create({
       session: 'rural-dung-cakes',
       autoClose: false,
-      puppeteerOptions: { headless: true },
+      puppeteerOptions: puppeteerArgs,
     });
     console.log('WhatsApp client initialized successfully');
     const phoneNumber = await client.getWid();
     console.log('Authenticated WhatsApp number:', phoneNumber);
   } catch (error) {
     console.error('Failed to initialize WhatsApp client:', error);
+    throw error; // Rethrow to handle in deployment logs
   }
 }
 
-initializeWhatsApp();
+initializeWhatsApp().catch((error) => {
+  console.error('Initialization failed, server will continue running:', error);
+});
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'Server running', whatsappReady: !!client });
@@ -43,7 +59,6 @@ app.post('/send-order', async (req, res) => {
   }
 
   const yourNumber = '919301680755@c.us'; // Your WhatsApp number
-  const senderNumber = `${fromNumber}@c.us`; // User's WhatsApp number from input
 
   const message = `
 Order Details:
@@ -54,13 +69,12 @@ Payment: ${paymentMethod.toUpperCase()}
 Customer: ${user.name}
 Phone: ${user.phone}
 Address: ${user.address}
+From: ${fromNumber}
 `.trim();
 
   try {
-    console.log('Sending text message from:', senderNumber, 'to:', yourNumber);
-    // Note: wppconnect can't send from another number; this is a limitation.
-    // We'll send from the authenticated number to your number instead.
-    await client.sendText(yourNumber, `From ${senderNumber}:\n${message}`);
+    console.log('Sending text message to:', yourNumber);
+    await client.sendText(yourNumber, message);
     console.log('Text message sent successfully');
 
     for (const item of items) {
@@ -79,7 +93,7 @@ Address: ${user.address}
         yourNumber,
         imagePath,
         `${item.name}.jpg`,
-        `From ${senderNumber}: ${item.name} x${item.quantity}`
+        `${item.name} x${item.quantity}`
       );
       console.log(`Image sent for ${item.name}`);
     }
